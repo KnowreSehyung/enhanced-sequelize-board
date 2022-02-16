@@ -35,12 +35,11 @@ class UserController {
     return await this.userService.create({ email, name, password });
   }
 
-  async login(req, res, next) {
+  login(req, res, next) {
     passport.authenticate("local", (_, user, error) => {
       if (error) {
         return res.status(401).json({ success: false, error });
       }
-
       req.session.user = user;
       return res.json({ success: true, error: null });
     })(req, res, next);
