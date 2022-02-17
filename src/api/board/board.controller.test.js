@@ -46,54 +46,54 @@ describe("보드 컨트롤러 테스트", () => {
     });
   });
 
-  describe("게시글 등록", () => {
-    beforeAll(() => {
-      boardController.boardService.post.mockResolvedValue(db[0]);
-    });
+  // describe("게시글 등록", () => {
+  //   beforeAll(() => {
+  //     boardController.boardService.post.mockResolvedValue(db[0]);
+  //   });
 
-    test("게시글 등록 성공", async () => {
-      const fakeData = {
-        body: {
-          title: "test",
-          content: "test",
-          author: 1,
-        },
-        session: {
-          user: {
-            id: 1,
-          },
-        },
-      };
-      const res = {
-        json: jest.fn().mockImplementation((data)=>{
-            const d = data;
-            return ()=>{
-                return;
-            }
-        }),
-      };
-      const next = jest.fn();
-      await reqWrapper(boardController.post)(fakeData, res, next);
-      expect(res).toEqual({
-        success: true,
-        error: null,
-        response: { id: 1, title: "test1", content: "test", author: 1 },
-      });
-    });
+  //   test("게시글 등록 성공", async () => {
+  //     const fakeData = {
+  //       body: {
+  //         title: "test",
+  //         content: "test",
+  //         author: 1,
+  //       },
+  //       session: {
+  //         user: {
+  //           id: 1,
+  //         },
+  //       },
+  //     };
+  //     const res = {
+  //       json: jest.fn().mockImplementation((data)=>{
+  //           const d = data;
+  //           return ()=>{
+  //               return;
+  //           }
+  //       }),
+  //     };
+  //     const next = jest.fn();
+  //     await reqWrapper(boardController.post)(fakeData, res, next);
+  //     expect(res).toEqual({
+  //       success: true,
+  //       error: null,
+  //       response: { id: 1, title: "test1", content: "test", author: 1 },
+  //     });
+  //   });
 
-    // test("게시물 등록 실패 - 세션없음", async () => {
-    //   const fakeData = {
-    //     body: {
-    //       title: "test",
-    //       content: "test",
-    //       author: 1,
-    //     },
-    //     session: {},
-    //   };
-    //   const res = {};
-    //   const next = jest.fn();
-    //   reqWrapper(boardController.post)(fakeData, res, next);
-    //   console.log(res);
-    // });
-  });
+  // test("게시물 등록 실패 - 세션없음", async () => {
+  //   const fakeData = {
+  //     body: {
+  //       title: "test",
+  //       content: "test",
+  //       author: 1,
+  //     },
+  //     session: {},
+  //   };
+  //   const res = {};
+  //   const next = jest.fn();
+  //   reqWrapper(boardController.post)(fakeData, res, next);
+  //   console.log(res);
+  // });
+  // });
 });
