@@ -3,12 +3,13 @@ const { Router } = require("express");
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
-const logger = require("morgan");
 const errorMiddleware = require("./middlewares/error.middleware");
 const LocalStratage = require("./api/auth/local.stratage");
 const { createClient } = require("redis");
 const RedisStore = require("connect-redis")(session);
 const swaggerUi = require("swagger-ui-express");
+const morgan = require("morgan");
+const { stream } = require("./config/winston.config");
 
 let redisClient = createClient({
   url: process.env.REDIS_HOST,
@@ -60,7 +61,7 @@ class App {
     );
     this.app.use(passport.initialize());
     this.app.use(passport.session());
-    this.app.use(logger("dev"));
+    this.app.use(morgan("combined", stream));
   }
 
   initializeErrorMiddlewares() {
