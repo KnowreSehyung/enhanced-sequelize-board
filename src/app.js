@@ -8,6 +8,7 @@ const errorMiddleware = require("./middlewares/error.middleware");
 const LocalStratage = require("./api/auth/local.stratage");
 const { createClient } = require("redis");
 const RedisStore = require("connect-redis")(session);
+const swaggerUi = require("swagger-ui-express");
 
 let redisClient = createClient({
   url: process.env.REDIS_HOST,
@@ -27,6 +28,7 @@ class App {
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
     this.initializeErrorMiddlewares();
+    this.initializeSwagger();
   }
 
   initializeControllers(controllers = []) {
@@ -63,6 +65,14 @@ class App {
 
   initializeErrorMiddlewares() {
     this.app.use(errorMiddleware);
+  }
+
+  initializeSwagger() {
+    this.app.use(
+      "/docs",
+      swaggerUi.serve,
+      swaggerUi.setup(require("./config/swagger-doc.config"))
+    );
   }
 
   getServer() {
